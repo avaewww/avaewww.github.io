@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>avaewww - Singular Canvas Flow</title>
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&amp;family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-bold": "#E85002",
+                        "ink-black": "#000000",
+                        "ink-gray": "#333333",
+                        "canvas-light": "#F9F9F9",
+                        "text-dim": "#A7A7A7",
+                    },
+                    fontFamily: {
+                        "display": ["Montserrat", "sans-serif"],
+                        "body": ["Public Sans", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-ink-black antialiased overflow-x-hidden;
+                background: linear-gradient(
+                    180deg, 
+                    #000000 0%, 
+                    #000000 15%, 
+                    #333333 35%, 
+                    #E85002 65%, 
+                    #F9F9F9 90%,
+                    #F9F9F9 100%
+                );
+                background-attachment: scroll;
+            }
+        }
+        .text-editorial-headline {
+            font-family: 'Public Sans', sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 0.85;
+        }
+        .glass-panel {
+            @apply backdrop-blur-xl bg-white/5 border border-white/10;
+        }
+        .floating-content {
+            transition: transform 0.3s ease-out;
+        }
+        .section-anchor {
+            scroll-margin-top: 5rem;
+        }
+        ::selection {
+            background: #E85002;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen font-display">
+    <nav class="fixed top-0 z-[100] w-full mix-blend-difference">
+        <div class="max-w-[1400px] mx-auto px-6 md:px-10 h-20 md:h-24 flex items-center justify-between">
+            <div class="flex items-center gap-2 md:gap-3 text-white">
+                <span class="material-symbols-outlined text-3xl md:text-4xl text-[#E85002]">view_in_ar</span>
+                <span class="text-xl md:text-2xl font-black uppercase tracking-tighter">avaewww</span>
+            </div>
+            <button class="md:hidden text-white hover:text-[#E85002] transition-colors">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+            <div class="hidden md:flex items-center gap-10">
+                <a class="text-xs font-bold uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+                    href="#mission">Mission</a>
+                <a class="text-xs font-bold uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+                    href="#bio">Bio</a>
+                <a class="text-xs font-bold uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+                    href="#impact">Impact</a>
+                <a aria-label="Instagram" class="text-white/70 hover:text-white transition-colors flex items-center"
+                    href="https://www.instagram.com/avaewww?igsh=Ymk4bDg2dThyNjgw" target="_blank">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://send.monobank.ua/jar/UaQQ18Rvo" target="_blank"
+                    class="px-6 py-2 md:px-8 md:py-3 bg-white text-black text-[10px] md:text-xs font-black uppercase tracking-widest rounded-full hover:bg-[#E85002] hover:text-white transition-all inline-block">
+                    Donate
+                </a>
+            </div>
+        </div>
+    </nav>
+    <main class="relative w-full">
+        <header class="relative min-h-screen flex flex-col justify-center px-6 md:px-10 pt-28 pb-10 md:pt-32 md:pb-20">
+            <div class="max-w-[1400px] mx-auto w-full">
+                <div class="flex items-center gap-4 mb-8 md:mb-12">
+                    <span class="h-[2px] w-12 md:w-20 bg-primary-bold"></span>
+                    <span class="text-primary-bold font-black tracking-[0.3em] uppercase text-[10px] md:text-xs">The
+                        Maker Initiative</span>
+                </div>
+                <h1 class="text-editorial-headline text-[18vw] text-white uppercase mb-10 md:mb-20">
+                    WHO<br />AM I?
+                </h1>
+                <div class="relative w-full max-w-6xl ml-auto">
+                    <div class="aspect-video overflow-hidden rounded-2xl shadow-2xl relative mb-16 md:mb-0">
+                        <div class="absolute inset-0 bg-cover bg-center -scale-x-100"
+                            style="background-image: url('./hero.png');">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent">
+                        </div>
+                    </div>
+                    <div
+                        class="relative md:absolute md:-bottom-10 md:-left-10 lg:left-[-10%] glass-panel p-6 md:p-10 max-w-lg rounded-3xl shadow-2xl mx-auto md:mx-0">
+                        <p class="text-white text-lg md:text-xl font-body leading-relaxed italic">
+                            When the war started, I realized my 3D printers could do more than print toys. Now, they are
+                            a vital tool for manufacturing critical components, supporting the AFU, and saving lives on
+                            the front lines.
+                            <span
+                                class="block mt-4 text-primary-bold font-black not-italic tracking-wider uppercase text-sm">—
+                                Artur</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="section-anchor relative py-32 md:py-52 px-6 md:px-10" id="mission">
+            <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+                <div class="flex flex-col gap-6 lg:sticky lg:top-32">
+                    <h2 class="text-editorial-headline text-6xl md:text-9xl text-canvas-light uppercase leading-[0.8]">
+                        The<br />Mission
+                    </h2>
+                </div>
+                <div class="flex flex-col justify-center h-full pt-4 lg:pt-20">
+                    <p class="text-text-dim text-xl md:text-3xl leading-[1.6] font-body font-medium">
+                        To bridge the gap between scarcity and necessity. We use agile 3D printing technology to
+                        manufacture critical humanitarian aid parts on-demand, directly where they are needed most. By
+                        decentralizing production, we reduce wait times from weeks to hours, ensuring help arrives
+                        before it's too late.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section class="section-anchor relative py-20 md:py-40 px-6 md:px-10" id="bio">
+            <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                <div class="lg:col-span-5 flex flex-col justify-center gap-8 md:gap-10">
+                    <h2 class="text-5xl md:text-6xl font-black text-white uppercase leading-none">The<br /><span
+                            class="text-primary-bold">Transition</span></h2>
+                    <div class="space-y-6">
+                        <p class="text-white/70 text-lg md:text-xl leading-relaxed font-body">
+                            I am a maker turned humanitarian. Before, my workshop was a place of curiosity and play.
+                            Now, it is a factory of necessity. The humming of motors that once signaled a hobby now
+                            signals hope.
+                        </p>
+                        <p class="text-white/70 text-lg md:text-xl leading-relaxed font-body">
+                            Every spool of filament is a potential life-saving device or a piece of protective gear. The
+                            transition wasn't a choice; it was an imperative.
+                        </p>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 flex flex-col gap-8 md:gap-12 lg:pl-20">
+                    <div
+                        class="p-8 md:p-12 glass-panel rounded-[2rem] md:rounded-[3rem] shadow-xl relative overflow-hidden group">
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-primary-bold/20 blur-3xl rounded-full translate-x-10 -translate-y-10 group-hover:scale-150 transition-transform duration-700">
+                        </div>
+                        <div class="relative z-10">
+                            <span
+                                class="material-symbols-outlined text-primary-bold text-5xl md:text-6xl mb-6">precision_manufacturing</span>
+                            <h3 class="text-2xl md:text-3xl font-black text-white uppercase mb-4">Localized Production
+                            </h3>
+                            <p class="text-white/60 text-base md:text-lg leading-relaxed">
+                                Printing directly in safe zones to minimize transport risks. We operate with speed and
+                                precision, bypassing traditional supply chain bottlenecks.
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="self-start md:self-end max-w-sm w-full p-6 md:p-8 border-l-4 border-primary-bold bg-white/5 backdrop-blur-sm rounded-2xl md:rounded-[2rem]">
+                        <h4 class="text-[10px] md:text-xs font-black tracking-widest text-primary-bold uppercase mb-4">
+                            Current Fleet</h4>
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-2 md:gap-0">
+                            <span class="text-xl md:text-2xl font-bold text-white">BambuLab A1</span>
+                            <span class="text-3xl md:text-4xl font-black text-white/20 uppercase tracking-tighter">x 1
+                                Unit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-anchor relative py-20 md:py-60 px-6 md:px-10" id="impact">
+            <div class="max-w-[1400px] mx-auto">
+                <div class="flex flex-col items-center text-center gap-8 md:gap-12">
+                    <div class="flex items-center gap-4 text-white/50">
+                        <span class="material-symbols-outlined text-3xl md:text-4xl">volunteer_activism</span>
+                        <span class="text-xs md:text-sm font-black uppercase tracking-[0.5em]">Direct Action</span>
+                    </div>
+                    <h2
+                        class="text-editorial-headline text-[15vw] md:text-[14rem] text-white uppercase mix-blend-overlay opacity-30">
+                        IMPACT
+                    </h2>
+                    <div
+                        class="max-w-4xl -mt-10 md:-mt-40 z-10 p-8 md:p-16 bg-black shadow-2xl rounded-3xl border border-white/5 w-full">
+                        <h3 class="text-3xl md:text-5xl font-black text-white uppercase mb-6 md:mb-8 leading-tight">100%
+                            Transparency. <br /><span class="text-primary-bold">Zero Overhead.</span></h3>
+                        <p class="text-white/60 text-lg md:text-xl font-body leading-relaxed mb-8 md:mb-12">
+                            I'm just one student with a machine. I don't have administrative fees. Your money buys
+                            plastic. That plastic becomes a tool. That tool saves a life. It's that simple.
+                        </p>
+                        <div class="flex justify-center w-full">
+                            <div
+                                class="p-6 md:p-10 bg-zinc-900 border border-white/10 rounded-2xl flex flex-col items-center w-full max-w-2xl">
+                                <span class="text-primary-bold text-4xl md:text-5xl font-black mb-3">$10</span>
+                                <span class="text-white/50 text-xs md:text-base font-bold uppercase tracking-widest">1KG
+                                    PETG FILAMENT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="relative py-20 md:py-40 px-6 md:px-10">
+            <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8">
+                <div
+                    class="md:col-span-8 group relative aspect-[16/10] overflow-hidden rounded-3xl shadow-2xl translate-y-0 md:translate-y-20">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                        style="background-image: url('./printer.jpg');">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10">
+                        <span
+                            class="bg-white/10 backdrop-blur-md text-white text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] px-3 py-2 md:px-4 md:py-2 rounded-full border border-white/20">Production:
+                            Home Workspace</span>
+                    </div>
+                </div>
+                <div
+                    class="md:col-span-4 group relative aspect-[3/4] overflow-hidden rounded-3xl shadow-2xl translate-y-0 md:-translate-y-10">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+                        style="background-image: url('./parts.png');">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10">
+                        <span
+                            class="bg-white/10 backdrop-blur-md text-white text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] px-3 py-2 md:px-4 md:py-2 rounded-full border border-white/20">Output:
+                            Life-Saving Essentials</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="relative py-20 md:py-32 px-6 md:px-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <div
+                    class="inline-flex items-center justify-center p-4 bg-white/10 rounded-full mb-6 md:mb-8 backdrop-blur-sm border border-white/5">
+                    <svg class="w-6 h-6 md:w-8 md:h-8 fill-black" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                        </path>
+                    </svg>
+                </div>
+                <h2
+                    class="text-4xl md:text-5xl lg:text-6xl font-black text-black uppercase mb-4 md:mb-6 tracking-tight">
+                    Follow The <span class="text-black">Journey</span>
+                </h2>
+                <p class="text-black/80 text-lg md:text-xl font-body leading-relaxed mb-8 md:mb-10 max-w-2xl mx-auto">
+                    I post regular updates and full financial audits on my Instagram to maintain 100% transparency.
+                </p>
+                <a class="inline-block px-8 py-3 md:px-10 md:py-4 bg-ink-black text-white text-xs md:text-sm font-black uppercase tracking-[0.2em] hover:bg-[#333333] transition-all duration-300 rounded-full shadow-lg"
+                    href="https://www.instagram.com/avaewww?igsh=Ymk4bDg2dThyNjgw" target="_blank">
+                    Follow @avaewww
+                </a>
+            </div>
+        </section>
+        <footer class="relative py-20 md:py-60 px-6 md:px-10">
+            <div class="max-w-4xl mx-auto text-center flex flex-col items-center gap-8 md:gap-12">
+                <div
+                    class="size-20 md:size-24 bg-primary-bold rounded-full flex items-center justify-center animate-bounce shadow-[0_0_50px_rgba(232,80,2,0.4)]">
+                    <span class="material-symbols-outlined text-white text-4xl md:text-5xl">local_fire_department</span>
+                </div>
+                <h2
+                    class="text-editorial-headline text-5xl md:text-8xl lg:text-9xl text-black uppercase leading-[0.85] relative z-10">
+                    FUEL THE<br /><span class="text-primary-bold">NEXT LAYER</span>
+                </h2>
+                <div
+                    class="w-full max-w-[2000px] flex items-center justify-center my-4 md:my-0 relative -mx-20 md:mx-0">
+                    <img src="./footer_art.png" alt="Cat with Bambulab 3D Printer and filament"
+                        class="w-full max-w-lg md:max-w-2xl h-auto object-contain z-10 relative hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="flex flex-col items-center gap-8 md:gap-12 z-20 relative -mt-4 md:-mt-8">
+                    <p
+                        class="text-black/60 text-lg md:text-2xl font-body font-medium max-w-2xl bg-canvas-light/30 backdrop-blur-sm p-4 rounded-xl">
+                        Help me keep the nozzle hot and the filament flowing. 100% of your donation translates to raw
+                        materials on the build plate.
+                    </p>
+                    <a href="https://send.monobank.ua/jar/UaQQ18Rvo" target="_blank"
+                        class="group relative px-10 py-5 md:px-16 md:py-8 bg-[#E85002] rounded-2xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl w-full md:w-auto inline-block text-center">
+                        <div
+                            class="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        </div>
+                        <span
+                            class="relative z-10 text-white text-lg md:text-2xl font-black uppercase tracking-widest flex items-center justify-center gap-4">
+                            Fuel The Printer
+                            <span class="material-symbols-outlined text-2xl md:text-3xl">arrow_forward</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="mt-20 md:mt-40 flex flex-col items-center gap-8 md:gap-12 w-full">
+                    <div class="flex gap-8 md:gap-10">
+                        <button class="text-black/40 hover:text-[#E85002] transition-colors"
+                            onclick="if(navigator.share) navigator.share({title: 'The Maker Initiative', url: window.location.href})"><span
+                                class="material-symbols-outlined text-3xl md:text-4xl">share</span></button>
+                        <a class="text-black/40 hover:text-[#E85002] transition-colors"
+                            href="mailto:artur@avaewww.eu"><span
+                                class="material-symbols-outlined text-3xl md:text-4xl">mail</span></a>
+                    </div>
+                    <div class="w-full h-px bg-black/5"></div>
+                    <div
+                        class="flex flex-col md:flex-row items-center md:justify-between w-full text-[10px] font-black uppercase tracking-[0.4em] text-black/30 gap-4 md:gap-0 text-center md:text-left">
+                        <span>© 2026 avaewww</span>
+                        <span>Built for Impact</span>
+                        <span>Lviv • Ukraine</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>
+
+</html>
